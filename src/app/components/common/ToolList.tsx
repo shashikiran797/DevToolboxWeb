@@ -96,6 +96,10 @@ export const toolList: ToolOption[] = [
     name: "JWT Viewer",
     path: "/tools/jwt-viewer",
   },
+  {
+    name: "Mermaid Editor",
+    path: "/tools/mermaid-editor",
+  },
 ];
 
 export default function ToolList() {
