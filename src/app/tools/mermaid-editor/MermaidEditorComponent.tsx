@@ -4,11 +4,20 @@ import React, { useState, useEffect, useCallback } from 'react';
 import mermaid from 'mermaid';
 import useDebounce from '@/app/hooks/useDebounce';
 import TextArea from '@/app/components/common/TextArea';
+import { ToolType } from '@prisma/client';
+import { saveHistory } from '@/utils/clientUtils';
+import { User } from '@clerk/backend';
 
 // Initialize Mermaid once
 mermaid.initialize({ startOnLoad: false });
 
-const MermaidEditorComponent = () => {
+const MermaidEditorComponent = ({
+  user = null,
+  isProUser = false,
+}: {
+  user?: User | null;
+  isProUser?: boolean;
+}) => {
   const [code, setCode] = useState('graph TD;\n    A-->B;\n    A-->C;\n    B-->D;\n    C-->D;');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -82,6 +91,17 @@ const MermaidEditorComponent = () => {
 
   useEffect(() => {
     renderDiagram(debouncedCode);
+    if (debouncedCode) {
+      void saveHistory({
+        user,
+        isProUser,
+        toolType: ToolType.MermaidEditor,
+        onError: () => {},
+        metadata: {
+          debouncedCode,
+        },
+      });
+    }
   }, [debouncedCode, renderDiagram]);
 
   return (
