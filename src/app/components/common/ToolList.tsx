@@ -69,6 +69,10 @@ export const toolList: ToolOption[] = [
     path: "/tools/line-sort-and-dedupe",
   },
   {
+    name: "Lorem Ipsum Generator",
+    path: "/tools/lorem-ipsum-generator",
+  },
+  {
     name: "Regex Checker",
     path: "/tools/regex-checker",
   },
